@@ -9,4 +9,4 @@
   hosts: DRM
   remote_user: root
   roles:
-  - drm
+  - fperreau.ibm_resiliency_orchestration_drm

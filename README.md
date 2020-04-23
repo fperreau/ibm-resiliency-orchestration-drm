@@ -93,7 +93,7 @@ Execute this simple command **ansible-playbook site.yml** to deploy your first I
       hosts: DRM
       remote_user: root
       roles:
-        - drm
+        - fperreau.ibm_resiliency_orchestration_drm
 
 License
 -------
