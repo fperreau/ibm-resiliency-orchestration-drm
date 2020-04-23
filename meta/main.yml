@@ -6,6 +6,7 @@
 ##
 
 galaxy_info:
+  role_name: drm
   author: Frederic PERREAU
   description: IBM Resiliency Orchestration Disaster Recover Manager install
   company: IBM
