@@ -1,0 +1,36 @@
+---
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+- name: Start MARIADB
+  service:
+    name:  mariadb
+    state: started
+
+- name: Stop MARIADB
+  service:
+    name:  mariadb
+    state: stopped
+
+- name: Restart MARIADB
+  service:
+    name:  mariadb
+    state: restarted
+
+- name: Start PANACES
+  service:
+    name:  panaces
+    state: started
+
+- name: Stop PANACES
+  service:
+    name:  panaces
+    state: stopped
+
+- name: Restart PANACES
+  service:
+    name:  panaces
+    state: restarted

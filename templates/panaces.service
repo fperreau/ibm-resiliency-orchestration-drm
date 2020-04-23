@@ -1,0 +1,22 @@
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+[Unit]
+Description=Panaces DRM services
+After=mariadb.service network.target
+
+[Service]
+WorkingDirectory={{EAMSROOT}}/bin
+Type=forking
+Restart=always
+RestartSec=60
+User=root
+ExecStart=/usr/bin/env {{EAMSROOT}}/bin/panaces start
+ExecStop=/usr/bin/env {{EAMSROOT}}/bin/panaces stop
+Restart=/usr/bin/env {{EAMSROOT}}/bin/panaces restart
+
+[Install]
+WantedBy=multi-user.target

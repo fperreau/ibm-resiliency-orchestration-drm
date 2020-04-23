@@ -1,0 +1,12 @@
+---
+##
+# LAB SITE
+#
+# Author: F.PERREAU
+##
+
+- name: Install RESILIENCY ORCHESTRATION
+  hosts: DRM
+  remote_user: root
+  roles:
+  - drm

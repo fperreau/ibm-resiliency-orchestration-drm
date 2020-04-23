@@ -1,0 +1,37 @@
+---
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+FILES:        "DRM_8.0.4.0"
+BUILD:        "/tmp/build.Server"
+
+EAMSROOT:     /opt/panaces
+TOMCAT_HOME:  /opt/tomcat9
+SQLID:        99
+SQLPORT:      3306
+SQLPASS:      "secret"
+IPDRM:        "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+
+BINARY_FILES:
+- { archive: Server.tar.gz,  creates: install.bin }
+- { archive: MariaDB.tgz,    creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+- { archive: Tomcat.tgz,     creates: apache-tomcat-9.0.27.tar.gz }
+- { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
+
+TEMPLATE_FILES:
+- PanacesServerInstaller.properties
+- panaces.service
+
+MARIADB_PKG:
+- "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
+- "{{BUILD}}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
+- "{{BUILD}}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+
+TOMCAT_SRC: "apache-tomcat-9.0.27"
+TOMCAT_PKG: "{{BUILD}}/{{TOMCAT_SRC}}.tar.gz"
+
+THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
+THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"

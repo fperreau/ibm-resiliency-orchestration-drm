@@ -1,0 +1,15 @@
+---
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+galaxy_info:
+  author: Frederic PERREAU
+  description: IBM Resiliency Orchestration Disaster Recover Manager install
+  company: IBM
+  license: license (Apache-2.0, MIT)
+  min_ansible_version: 2.6
+  galaxy_tags: [IBM, Resiliency, Orchestration, Business Continuity, DRP ]
+  dependencies: []
