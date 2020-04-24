@@ -125,7 +125,7 @@
 #
 - name: CHANGE TOMCAT CONFIGURATION
   copy:
-    src: "{{BUILD}}/tomcat_conf_server.xml}}"
+    src: "{{BUILD}}/tomcat_conf_server.xml"
     dest: "{{TOMCAT_HOME}}/conf/server.xml"
     mode: "0640"
     owner: tomcatuser
