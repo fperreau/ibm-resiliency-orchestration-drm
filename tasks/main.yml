@@ -61,7 +61,7 @@
     creates: "{{ TOMCAT_HOME }}"
   register: install_tomcat
 - name: RENAME APACHE TOMCAT HOME
-  shell: mv "/opt/{{ TOMCAT_SRC }}" "{{ TOMCAT_HOME }}"
+  command: mv "/opt/{{ TOMCAT_SRC }}" "{{ TOMCAT_HOME }}"
   args:
     creates: "{{ TOMCAT_HOME }}"
   when: install_tomcat.changed
@@ -70,7 +70,7 @@
 # Install Resiliency Orchestration DRM
 #
 - name: INSTALL PANACES
-  shell: ./install.bin -f PanacesServerInstaller.properties
+  command: ./install.bin -f PanacesServerInstaller.properties
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ EAMSROOT }}"
@@ -92,7 +92,7 @@
   register: install_thirdparty
 - name: "COPY ThirPartyJSLib TO {{ item }}"
   copy:
-    src: "{{ item }}/ThirdPartyJSLib/" 
+    src: "{{ item }}/ThirdPartyJSLib/"
     dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
