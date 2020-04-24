@@ -17,5 +17,5 @@ galaxy_info:
   - name: RedHat
     versions:
     - 8.0
-  galaxy_tags: [ibm,resiliency,orchestration,continuity,recovery,drp]
+  galaxy_tags: [ibm, resiliency, orchestration, continuity, recovery, drp]
   dependencies: []
