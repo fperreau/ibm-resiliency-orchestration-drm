@@ -76,7 +76,7 @@
           minSpareThreads="25" maxSpareThreads="75"
           enableLookups="false" disableUploadTimeout="true"
           clientAuth="false" sslEnabledProtocols="TLSv1.2"
-          keystoreFile="/opt/panaces/installconfig/keystore/sanovi.keystore"
+          keystoreFile="{{EAMSROOT}}/installconfig/keystore/sanovi.keystore"
           keystorePass="^vMkT%678#4-06Gjue672Kwo95dzg"
           compression="on" compressionMinSize="2048"
           nocompressionUserAgents="gozilla,traviata"

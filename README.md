@@ -6,7 +6,7 @@ IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery
 Requirements
 ------------
 
-All you need is to download tIBM Resiliency Orchestration server file from IBM Support Fix Central web site https://www.ibm.com/support/fixcentral and the Open Source prerequisits:
+All you need is to download IBM Resiliency Orchestration server file from IBM Support Fix Central web site https://www.ibm.com/support/fixcentral and the Open Source prerequisits:
   
   ## download web sites URI
     - https://www.ibm.com/support/fixcentral
@@ -32,6 +32,7 @@ Default role variable are liste bellow. Those variables define the Binary files 
     SQLID:        99
     SQLPORT:      3306
     SQLPASS:      "secret"
+    
     IPDRM:        "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 
   ## List of files needed to install IBM Resiliency Orchestration version 8.0.4.0
@@ -45,18 +46,20 @@ Default role variable are liste bellow. Those variables define the Binary files 
     TEMPLATE_FILES:
     - PanacesServerInstaller.properties
     - panaces.service
-
-  ## Detail of MariaDB packages content of "MariaDB.tgz"
+    - my_drm.cnf
+    - tomcat_conf_server.xml
+    
+  ### Detail of **MariaDB** packages content of "MariaDB.tgz"
     MARIADB_PKG:
     - "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
     - "{{BUILD}}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
     - "{{BUILD}}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
 
-  ## Detail of Apache Tomcat binary file of "Tomcat.tgz"
+  ### Detail of **Apache Tomcat** binary file of "Tomcat.tgz"
     TOMCAT_SRC: "apache-tomcat-9.0.27"
     TOMCAT_PKG: "{{BUILD}}/{{TOMCAT_SRC}}.tar.gz"
 
-  ## Detail of third party Open Source software content of "ThirdParty.tgz"
+  ### Detail of **THIRDPARTY** Open Source software content of "ThirdParty.tgz"
     THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
     THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"
 
@@ -71,16 +74,16 @@ Minimal resources needed by server to run IBM Resiliency Orchestration are:
     - DISK: 50 GiB + 100 GiB
     - OS:   RHELv8
 
-We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in Ansible files directory name to DRM_8.0.4.0 for this version 8.0.4.0.
+We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in **Ansible files** directory name to DRM_8.0.4.0 for this version 8.0.4.0.
 
-    - files:
+    - **files**:
       - DRM_8.0.4.0:
         - Server.tar.gz           # binary tar file of IBM Resiliency Orchestration server
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software
   
-For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from RHELv8 ISO distribution. 
+For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** distribution. 
 
 Example DRM Playbook
 --------------------

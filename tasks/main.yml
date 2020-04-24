@@ -35,9 +35,10 @@
     name: "{{MARIADB_PKG}}"
     state: present
 - name: CONFIGURE MY.CNF
-  template:
-    src: my_drm.cnf
+  copy:
+    src: "{{BUILD}}/my_drm.cnf"
     dest: "/etc/my.cnf"
+    remote_src: yes
     backup: yes
 - name: START MARIADB
   service:
@@ -124,11 +125,12 @@
 #
 - name: CHANGE TOMCAT CONFIGURATION
   copy:
-    src: tomcat_conf_server.xml
+    src: "{{BUILD}}/tomcat_conf_server.xml}}"
     dest: "{{TOMCAT_HOME}}/conf/server.xml"
     mode: "0640"
     owner: tomcatuser
     group: tomcatusergroup
+    remote_src: yes
     backup: yes
   notify:
   - Restart PANACES

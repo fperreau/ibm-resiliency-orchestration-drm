@@ -10,10 +10,6 @@ BUILD:        "/tmp/build.Server"
 
 EAMSROOT:     /opt/panaces
 TOMCAT_HOME:  /opt/tomcat9
-SQLID:        99
-SQLPORT:      3306
-SQLPASS:      "secret"
-IPDRM:        "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 
 BINARY_FILES:
 - { archive: Server.tar.gz,  creates: install.bin }
@@ -24,6 +20,8 @@ BINARY_FILES:
 TEMPLATE_FILES:
 - PanacesServerInstaller.properties
 - panaces.service
+- tomcat_conf_server.xml
+- my_drm.cnf
 
 MARIADB_PKG:
 - "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"

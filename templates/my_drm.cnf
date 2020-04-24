@@ -7,7 +7,7 @@
 # The following options will be passed to all MySQL clients
 [client]
 #password       = your_password
-port            = {{SQLPORT}}
+port            = {{sql_port}}
 socket          = /var/lib/mysql/mysql.sock
 
 [mysqld]
@@ -16,7 +16,7 @@ socket=/var/lib/mysql/mysql.sock
 user=mysql
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
-port={{SQLPORT}}
+port={{sql_port}}
 
 skip-external-locking
 key_buffer_size = 256M
@@ -35,7 +35,7 @@ thread_concurrency = 8
 binlog_format=mixed
 
 # Setup for DB replication
-server-id={{SQLID}}
+server-id={{sql_id}}
 log-bin={{inventory_hostname}}-bin
 replicate-ignore-db=mysql
 replicate-ignore-db=information_schema
