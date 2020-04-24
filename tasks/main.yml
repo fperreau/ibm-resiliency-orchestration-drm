@@ -114,13 +114,6 @@
   - "{{EAMSROOT}}/lib"
 
 #
-# Start PANACES
-#
-- name: FIRST START PANACES
-  shell: "{{EAMSROOT}}/bin/panaces start"
-  when: result.changed
-
-#
 # Secure PANACES TOMCAT
 #
 - name: CHANGE TOMCAT CONFIGURATION
@@ -132,8 +125,6 @@
     group: tomcatusergroup
     remote_src: yes
     backup: yes
-  notify:
-  - Restart PANACES
 
 #
 # Configure PANACES service
@@ -162,3 +153,12 @@
     owner: panacesuser
     group: "panacesusergroup"
     state: directory
+
+#
+# Start PANACES
+#
+- name: FIRST START PANACES
+  service:
+    name:  panaces
+    state: started
+
