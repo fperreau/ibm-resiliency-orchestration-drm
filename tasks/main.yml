@@ -65,6 +65,8 @@
   args:
     creates: "{{ TOMCAT_HOME }}"
   when: install_tomcat.changed
+  notify:
+  - Restart PANACES
 
 #
 # Install Resiliency Orchestration DRM
@@ -100,6 +102,8 @@
   with_items:
    - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
   when: install_thirdparty.changed
+  notify:
+  - Restart PANACES
 - name: INSTALL GNULIB JSON IN PANACES
   unarchive:
     src: "{{ THIRDPARTY_GNULIB }}"
@@ -112,6 +116,8 @@
   with_items:
   - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib"
   - "{{ EAMSROOT }}/lib"
+  notify:
+  - Restart PANACES
 
 #
 # Secure PANACES TOMCAT
