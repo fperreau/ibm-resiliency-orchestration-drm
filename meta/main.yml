@@ -14,7 +14,7 @@ galaxy_info:
   min_ansible_version: 2.6
   github_branch: master
   platforms:
-  - name: RedHat
+  - name: redhat
     versions:
     - 8.0
   galaxy_tags: [ibm, resiliency, orchestration, continuity, recovery, drp]
