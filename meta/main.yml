@@ -13,5 +13,9 @@ galaxy_info:
   license: license (Apache-2.0, MIT)
   min_ansible_version: 2.6
   github_branch: master
-  galaxy_tags: [IBM, Resiliency, Orchestration, Business Continuity, DRP ]
+  platforms:
+  - name: RedHat x86_64
+    versions:
+    - RHELv8
+  galaxy_tags: [ibm,resiliency,orchestration,continuity,recovery,drp]
   dependencies: []

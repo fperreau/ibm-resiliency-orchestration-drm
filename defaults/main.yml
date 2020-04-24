@@ -24,12 +24,12 @@ TEMPLATE_FILES:
 - my_drm.cnf
 
 MARIADB_PKG:
-- "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
-- "{{BUILD}}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
-- "{{BUILD}}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+- "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
+- "{{ BUILD }}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
+- "{{ BUILD }}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
 
 TOMCAT_SRC: "apache-tomcat-9.0.27"
-TOMCAT_PKG: "{{BUILD}}/{{TOMCAT_SRC}}.tar.gz"
+TOMCAT_PKG: "{{ BUILD }}/{{ TOMCAT_SRC }}.tar.gz"
 
-THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
-THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"
+THIRDPARTY_JSLIB:   "{{ BUILD }}/ThirdPartyJSLib.zip"
+THIRDPARTY_GNULIB:  "{{ BUILD }}/gnulib.zip"

@@ -10,33 +10,33 @@
 #
 - name: CREATE BUILD DIRECTORY
   file:
-    path: "{{BUILD}}"
+    path: "{{ BUILD }}"
     state: directory
 - name: COPY BINARY FILES
   unarchive:
-    src:      "{{FILES}}/{{item.archive}}"
-    dest:     "{{BUILD}}"
+    src:      "{{ FILES }}/{{ item.archive }}"
+    dest:     "{{ BUILD }}"
     owner:    root
     group:    root
     mode:     "o-xwr"
-    creates:  "{{BUILD}}/{{item.creates}}"
-  with_items: "{{BINARY_FILES}}"
+    creates:  "{{ BUILD }}/{{ item.creates }}"
+  with_items: "{{ BINARY_FILES }}"
 - name: COPY TEMPLATE FILES
   template:
-    src: "{{item}}"
-    dest: "{{BUILD}}/{{item}}"
-  with_items: "{{TEMPLATE_FILES}}"
+    src: "{{ item }}"
+    dest: "{{ BUILD }}/{{ item }}"
+  with_items: "{{ TEMPLATE_FILES }}"
 
 #
 # Install MariaDB server
 #
 - name: INSTALL MARIADB SERVER
   dnf:
-    name: "{{MARIADB_PKG}}"
+    name: "{{ MARIADB_PKG }}"
     state: present
 - name: CONFIGURE MY.CNF
   copy:
-    src: "{{BUILD}}/my_drm.cnf"
+    src: "{{ BUILD }}/my_drm.cnf"
     dest: "/etc/my.cnf"
     remote_src: yes
     backup: yes
@@ -46,7 +46,7 @@
     state: started
     enabled: yes
 - name: SET SQL ROOT PASSWORD
-  shell: mysqladmin -u root password '{{sql_pass}}' && echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
+  shell: mysqladmin -u root password '{{ sql_pass }}' && echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
   args:
     creates: "/root/SetSQLRootPassword.lck"
 
@@ -55,15 +55,15 @@
 #
 - name: INSTALL APACHE TOMCAT
   unarchive:
-    src: "{{TOMCAT_PKG}}"
+    src: "{{ TOMCAT_PKG }}"
     dest: /opt
     remote_src: yes
-    creates: "{{TOMCAT_HOME}}"
+    creates: "{{ TOMCAT_HOME }}"
   register: install_tomcat
 - name: RENAME APACHE TOMCAT HOME
-  shell: mv "/opt/{{TOMCAT_SRC}}" "{{TOMCAT_HOME}}"
+  shell: mv "/opt/{{ TOMCAT_SRC }}" "{{ TOMCAT_HOME }}"
   args:
-    creates: "{{TOMCAT_HOME}}"
+    creates: "{{ TOMCAT_HOME }}"
   when: install_tomcat.changed
 
 #
@@ -72,54 +72,54 @@
 - name: INSTALL PANACES
   shell: ./install.bin -f PanacesServerInstaller.properties
   args:
-    chdir: "{{BUILD}}"
-    creates: "{{EAMSROOT}}"
+    chdir: "{{ BUILD }}"
+    creates: "{{ EAMSROOT }}"
   register: result
 
 #
 # Install Third PARTY software
 #
-- name: "INSTALL ThirdPartyJSLib TO {{item}}/ThirdPartyJSLib/"
+- name: "INSTALL ThirdPartyJSLib TO {{ item }}/ThirdPartyJSLib/"
   unarchive:
-    src: "{{THIRDPARTY_JSLIB}}"
-    dest: "{{item}}"
+    src: "{{ THIRDPARTY_JSLIB }}"
+    dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
     remote_src: yes
-    creates: "{{item}}/ThirdPartyJSLib/calendar.js"
+    creates: "{{ item }}/ThirdPartyJSLib/calendar.js"
   with_items:
-  - "{{TOMCAT_HOME}}/webapps/PanacesGUI/scripts"
+  - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
   register: install_thirdparty
-- name: "COPY ThirPartyJSLib TO {{item}}"
+- name: "COPY ThirPartyJSLib TO {{ item }}"
   copy:
-    src: "{{item}}/ThirdPartyJSLib/" 
-    dest: "{{item}}"
+    src: "{{ item }}/ThirdPartyJSLib/" 
+    dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
     remote_src: yes
   with_items:
-   - "{{TOMCAT_HOME}}/webapps/PanacesGUI/scripts"
+   - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
   when: install_thirdparty.changed
 - name: INSTALL GNULIB JSON IN PANACES
   unarchive:
-    src: "{{THIRDPARTY_GNULIB}}"
-    dest: "{{item}}"
+    src: "{{ THIRDPARTY_GNULIB }}"
+    dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
     mode:  "0775"
     remote_src: yes
-    creates: "{{item}}/json-20180813.jar"
+    creates: "{{ item }}/json-20180813.jar"
   with_items:
-  - "{{TOMCAT_HOME}}/webapps/PanacesGUI/WEB-INF/lib"
-  - "{{EAMSROOT}}/lib"
+  - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib"
+  - "{{ EAMSROOT }}/lib"
 
 #
 # Secure PANACES TOMCAT
 #
 - name: CHANGE TOMCAT CONFIGURATION
   copy:
-    src: "{{BUILD}}/tomcat_conf_server.xml"
-    dest: "{{TOMCAT_HOME}}/conf/server.xml"
+    src: "{{ BUILD }}/tomcat_conf_server.xml"
+    dest: "{{ TOMCAT_HOME }}/conf/server.xml"
     mode: "0640"
     owner: tomcatuser
     group: tomcatusergroup
@@ -131,18 +131,20 @@
 #
 - name: SYSTEMCTL PANACES SERVICE
   copy:
-    src: "{{BUILD}}/{{item}}"
-    dest: "/etc/systemd/system/{{item}}"
+    src: "{{ BUILD }}/{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
     remote_src: yes
   register: result
   with_items:
   - panaces.service
 - name: RELOAD SYSTEM SERVICE DB
-  command: systemctl daemon-reload
-  when: result.changed
+  systemd:
+    daemon_reload: yes
 - name: ENABLE PANACES SERVICE
-  command: systemctl enable panaces
-  when: result.changed
+  systemd:
+    name: panaces
+    state: started
+    enabled: yes
 
 #
 # Create BACKUP PANACES location
@@ -153,12 +155,3 @@
     owner: panacesuser
     group: "panacesusergroup"
     state: directory
-
-#
-# Start PANACES
-#
-- name: FIRST START PANACES
-  service:
-    name:  panaces
-    state: started
-

@@ -9,13 +9,13 @@ Description=Panaces DRM services
 After=mariadb.service network.target
 
 [Service]
-WorkingDirectory={{EAMSROOT}}/bin
+WorkingDirectory={{ EAMSROOT }}/bin
 Type=forking
 Restart=always
 RestartSec=300
 User=root
-ExecStart=/usr/bin/env {{EAMSROOT}}/bin/panaces start
-ExecStop=/usr/bin/env {{EAMSROOT}}/bin/panaces stop
+ExecStart=/usr/bin/env {{ EAMSROOT }}/bin/panaces start
+ExecStop=/usr/bin/env {{ EAMSROOT }}/bin/panaces stop
 
 [Install]
 WantedBy=multi-user.target
