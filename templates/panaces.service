@@ -16,7 +16,8 @@ RestartSec=60
 User=root
 ExecStart=/usr/bin/env {{EAMSROOT}}/bin/panaces start
 ExecStop=/usr/bin/env {{EAMSROOT}}/bin/panaces stop
-Restart=/usr/bin/env {{EAMSROOT}}/bin/panaces restart
+Restart=always
+RestartSec=300
 
 [Install]
 WantedBy=multi-user.target
