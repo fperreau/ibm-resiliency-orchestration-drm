@@ -12,5 +12,6 @@ galaxy_info:
   company: IBM
   license: license (Apache-2.0, MIT)
   min_ansible_version: 2.6
+  github_branch: master
   galaxy_tags: [IBM, Resiliency, Orchestration, Business Continuity, DRP ]
   dependencies: []
