@@ -46,7 +46,7 @@
     state: started
     enabled: yes
 - name: SET SQL ROOT PASSWORD
-  shell: mysqladmin -u root password '{{SQLPASS}}' && echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
+  shell: mysqladmin -u root password '{{sql_pass}}' && echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
   args:
     creates: "/root/SetSQLRootPassword.lck"
 
