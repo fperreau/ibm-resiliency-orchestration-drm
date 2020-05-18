@@ -3,7 +3,7 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 0.9.3
+version: 0.9.4
 
 Requirements
 ------------
@@ -25,10 +25,15 @@ Default role variables are liste bellow. Those variables define the Binary files
   # Role variables define in Ansible role/vars
   Those variables configure the DRM services IP address and the access to MariaDB server.
 
+    drm_mode:     "standard"
     drm_ip:       "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     sql_id:       99
     sql_port:     3306
     sql_pass:     "secret"
+  
+  ## DRM install modes 
+    **standard**   - DRM installation with remote Site Controller
+    **standalone** - DRM installation with local Site Controller
 
   # Default role variables define in Ansible role/defaults
 
@@ -85,7 +90,8 @@ We need to download the IBM Resiliency Orchestration server and Open Source prer
 
     - **files**:
       - DRM_8.0.4.0:
-        - Server.tar.gz           # binary tar file of IBM Resiliency Orchestration server
+        - Server.tar.gz           # binary tar file of IBM Resiliency Orchestration DRM
+        - SiteController.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software

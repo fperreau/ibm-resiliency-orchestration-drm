@@ -152,3 +152,21 @@
     owner: panacesuser
     group: "panacesusergroup"
     state: directory
+
+#
+# Install SITE CONTROLLER
+#
+- block:
+  - name: COPY SITE CONTROLLER FILES
+    unarchive:
+      src:      "{{ FILES }}/{{ item.archive }}"
+      dest:     "{{ BUILD }}"
+      extra_opts:
+      - "Linux/SiteController.bin"
+      owner:    root
+      group:    root
+      mode:     "o-xwr"
+      creates:  "{{ BUILD }}/{{ item.creates }}"
+    with_items: "{{ BINARY_SITE_CONTROLLER_FILES }}"
+  
+  when: drm_mode == "standalone"

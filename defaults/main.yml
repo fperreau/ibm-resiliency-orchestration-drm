@@ -17,8 +17,12 @@ BINARY_FILES:
 - { archive: Tomcat.tgz,     creates: apache-tomcat-9.0.27.tar.gz }
 - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
 
+BINARY_SITE_CONTROLLER_FILES:
+- { archvie: SiteController.tar.gz, creates: Linux/VM/SiteController.bin }
+
 TEMPLATE_FILES:
 - PanacesServerInstaller.properties
+- PanacesAgentNodeInstaller.properties
 - panaces.service
 - tomcat_conf_server.xml
 - my_drm.cnf
