@@ -9,4 +9,4 @@ sql_id:   99
 sql_port: 3306
 sql_pass: "secret"
 drm_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-drm_mode: "standard"    # standalone
+drm_mode: "standard"
