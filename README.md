@@ -32,8 +32,8 @@ Default role variables are liste bellow. Those variables define the Binary files
     sql_pass:     "secret"
   
   ## DRM install modes 
-    **standard**   - DRM installation with remote Site Controller
-    **standalone** - DRM installation with local Site Controller
+    drm_mode: **standard**     DRM installation with remote Site Controller
+    drm_mode: **standalone**   DRM installation with local Site Controller
 
   # Default role variables define in Ansible role/defaults
 
