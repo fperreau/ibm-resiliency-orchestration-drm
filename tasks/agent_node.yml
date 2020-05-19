@@ -44,7 +44,7 @@
     creates: "{{ SCTRL_HOME }}"
 
 #
-# Configure Co-Hosted Site Controller service 
+# Configure Co-Hosted Site Controller service
 #
 - name: SYSTEMCTL CO-HOSTED SITE CONTROLLER SERVICES
   copy:

@@ -7,7 +7,7 @@
 #
 # INSTALL PREREQUISIT PACKAGES
 #
-- name: INSTALL PREREQUISIT PACKAGES 
+- name: INSTALL PREREQUISIT PACKAGES
   dnf:
     name: "{{ PACKAGES }}"
     state: present
