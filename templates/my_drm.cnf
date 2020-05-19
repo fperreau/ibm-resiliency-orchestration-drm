@@ -16,7 +16,7 @@ socket=/var/lib/mysql/mysql.sock
 user=mysql
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
-port={{sql_port}}
+port={{ sql_port }}
 
 skip-external-locking
 key_buffer_size = 256M
@@ -35,8 +35,8 @@ thread_concurrency = 8
 binlog_format=mixed
 
 # Setup for DB replication
-server-id={{sql_id}}
-log-bin={{inventory_hostname}}-bin
+server-id={{ sql_id }}
+log-bin={{ inventory_hostname }}-bin
 replicate-ignore-db=mysql
 replicate-ignore-db=information_schema
 replicate-ignore-db=performance_schema
