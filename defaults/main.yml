@@ -5,15 +5,19 @@
 # Author: F.PERREAU
 ##
 
+#
+# ROLE VARIABLES
+#
+
 sql_id:   99
 sql_port: 3306
 sql_pass: "secret"
-drm_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-drm_mode: "standard"
+drm_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address']|ipaddr('address') }}"
 scr_ip:   "{{ drm_ip }}"
+drm_mode: "standard"
 
 #
-#
+# ROLE PARAMETERS
 #
 
 FILES:        "DRM_8.0.4.0"
@@ -21,6 +25,7 @@ BUILD:        "/tmp/build.Server"
 
 EAMSROOT:     /opt/panaces
 TOMCAT_HOME:  /opt/tomcat9
+SCTRL_HOME:   /opt/SiteController
 
 BINARY_FILES:
 - { archive: Server.tar.gz,  creates: install.bin }
@@ -28,15 +33,11 @@ BINARY_FILES:
 - { archive: Tomcat.tgz,     creates: apache-tomcat-9.0.27.tar.gz }
 - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
 
-BINARY_SITE_CONTROLLER_FILES:
-- { archvie: SiteController.tar.gz, creates: Linux/VM/SiteController.bin }
-
 TEMPLATE_FILES:
 - PanacesServerInstaller.properties
-- PanacesAgentNodeInstaller.properties
-- panaces.service
 - tomcat_conf_server.xml
 - my_drm.cnf
+- panaces.service
 
 MARIADB_PKG:
 - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
@@ -48,3 +49,14 @@ TOMCAT_PKG: "{{ BUILD }}/{{ TOMCAT_SRC }}.tar.gz"
 
 THIRDPARTY_JSLIB:   "{{ BUILD }}/ThirdPartyJSLib.zip"
 THIRDPARTY_GNULIB:  "{{ BUILD }}/gnulib.zip"
+
+BINARY_SITE_CONTROLLER_FILES:
+- { archive: SiteController.tar.gz, creates: Linux/VM/SiteController.bin }
+
+TEMPLATE_SITE_CONTROLLER_FILES:
+- PanacesAgentNodeInstaller.properties
+- panaces.agentnode.service
+
+PACKAGES:
+- zip
+- unzip

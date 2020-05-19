@@ -28,6 +28,12 @@
   with_items: "{{ TEMPLATE_FILES }}"
 
 #
+# Common Linux configuration
+#
+- name: COMMON LINUX CONFIGURATION
+  include_tasks: common.yml
+
+#
 # Install MariaDB server
 #
 - name: INSTALL MARIADB SERVER
@@ -68,7 +74,7 @@
 # Install Resiliency Orchestration DRM
 #
 - name: INSTALL PANACES
-  command: ./install.bin -f PanacesServerInstaller.properties
+  command: "{{ BUILD }}/install.bin -f {{ BUILD }}/PanacesServerInstaller.properties"
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ EAMSROOT }}"
@@ -111,7 +117,7 @@
   - "{{ EAMSROOT }}/lib"
 
 #
-# Secure PANACES TOMCAT
+# Secure Panaces Tomcat
 #
 - name: CHANGE TOMCAT CONFIGURATION
   copy:
@@ -124,7 +130,7 @@
     backup: yes
 
 #
-# Configure PANACES service
+# Configure Panaces service
 #
 - name: SYSTEMCTL PANACES SERVICE
   copy:
@@ -144,7 +150,7 @@
     enabled: yes
 
 #
-# Create BACKUP PANACES location
+# Create Backup Panaces location
 #
 - name: CREATE BACKUP PANACES LOCATION
   file:
@@ -152,3 +158,9 @@
     owner: panacesuser
     group: "panacesusergroup"
     state: directory
+
+#
+# Install Co-Hosted Site Controller
+#
+- include_tasks: agent_node.yml
+  when: drm_mode == "cohosted"

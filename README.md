@@ -3,7 +3,7 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 0.9.4
+version: 0.9.5
 
 Requirements
 ------------
@@ -22,39 +22,41 @@ Role Variables
 
 Default role variables are liste bellow. Those variables define the Binary files needed for IBM Resiliency Orchestration and the prerequisit Open Source software. This role install Resiliency Orchestration DRM, Tomcat web site and MariaDB in one Red Hat server.
 
-  # Role variables define in Ansible role/vars
-  Those variables configure the DRM services IP address and the access to MariaDB server.
+  # Default role variables define in Ansible role/defaults
+
+  Those variables configure the DRM installation mode, IP address and the access to MariaDB server.
 
     drm_mode:     "standard"
     drm_ip:       "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    scr_ip:       "{{ drm_ip }}"
     sql_id:       99
     sql_port:     3306
     sql_pass:     "secret"
   
-  ## DRM install modes 
-    drm_mode: **standard**     DRM installation with remote Site Controller
-    drm_mode: **standalone**   DRM installation with local Site Controller
+  ## DRM install modes  
+  **standard** - DRM installation with remote Site Controller
+  **cohosted** - DRM installation with local Site Controller
 
-  # Default role variables define in Ansible role/defaults
+  # Default role parameters define in Ansible role/defaults
 
-  ## Files/repository content the different binary files
+  ## Files/repository content of binary files for version 8.0.4.0
     FILES:        "DRM_8.0.4.0"
 
   ## Temporary directory use to install DRM
     BUILD:        "/tmp/build.Server"
   
-  ## Default paramters for IBM Resiliency Orchestation, Apache Tomcat, MaraiDB
+  ## Default paramters for DRM, Apache Tomcat, MaraiDB
     EAMSROOT:     /opt/panaces
     TOMCAT_HOME:  /opt/tomcat9
 
-  ## List of files needed to install IBM Resiliency Orchestration version 8.0.4.0
+  ## List of files needed to install DRM
     BINARY_FILES:
     - { archive: Server.tar.gz,  creates: install.bin }
     - { archive: MariaDB.tgz,    creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
     - { archive: Tomcat.tgz,     creates: apache-tomcat-9.0.27.tar.gz }
     - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
 
-  ## Templates files used in IBM Resiliency Orchestration install
+  ## Templates files used in DRM installation
     TEMPLATE_FILES:
     - PanacesServerInstaller.properties
     - panaces.service
@@ -75,6 +77,19 @@ Default role variables are liste bellow. Those variables define the Binary files
     THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
     THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"
 
+  ## List of files need to install co-hosted Site Controller
+    BINARY_SITE_CONTROLLER_FILES:
+    - { archive: SiteController.tar.gz, creates: Linux/VM/SiteController.bin }
+
+  ## Templates files used in co-hosted Controller installation
+    TEMPLATE_SITE_CONTROLLER_FILES:
+    - PanacesAgentNodeInstaller.properties
+    - panaces.agentnode.service
+
+  ## Prerequisits packages for DRM and co-hosted Site Controller installation
+    PACKAGES:
+    - zip
+    - unzip    
 
 Dependencies
 ------------
@@ -109,7 +124,7 @@ Execute this simple command **ansible-playbook site.yml** to deploy your first I
       hosts: DRM
       remote_user: root
       roles:
-        - fperreau.ibm_resiliency_orchestration_drm
+        - role: fperreau.ibm_resiliency_orchestration_drm
 
 License
 -------

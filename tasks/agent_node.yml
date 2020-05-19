@@ -1,0 +1,63 @@
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+#
+# Configure BUILD Co-Hosted Site Controller environment
+#
+- name: ADD CO-HOSTED SITE CONTROLLER IP ALIAS
+  shell: |
+    nmcli connection modify "System eth0" +IPv4.address "{{ scr_ip }}"
+    nmcli networking off
+    nmcli network on
+- name: COPY CO-HOSTED SITE CONTROLLER INSTALL FILES
+  unarchive:
+    src:      "{{ FILES }}/{{ item.archive }}"
+    dest:     "{{ BUILD }}"
+    owner:    root
+    group:    root
+    mode:     "o-xwr"
+    creates:  "{{ BUILD }}/{{ item.creates }}"
+  with_items: "{{ BINARY_SITE_CONTROLLER_FILES }}"
+  register: result
+- name: DELETE WINDOWS SITE CONTROLLER INSTALL FILE
+  file:
+    path: "{{ BUILD }}/Windows"
+    state: absent
+    force: true
+  when: result.changed
+- name: COPY CO-HOSTED SITE CONTROLLER TEMPLATE FILES
+  template:
+    src: "{{ item }}"
+    dest: "{{ BUILD }}/{{ item }}"
+  with_items: "{{ TEMPLATE_SITE_CONTROLLER_FILES }}"
+
+#
+# Install Co-Hosted Site Controller 
+#
+- name: INSTALL CO-HOSTED LINUX SITE CONTROLLER
+  command: "{{ BUILD }}/Linux/VM/SiteController.bin -f {{ BUILD }}/PanacesAgentNodeInstaller.properties"
+  args:
+    chdir: "{{ BUILD }}"
+    creates: "{{ SCTRL_HOME }}"
+
+#
+# Configure Co-Hosted Site Controller service 
+#
+- name: SYSTEMCTL CO-HOSTED SITE CONTROLLER SERVICES
+  copy:
+    src: "{{ BUILD }}/{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+    remote_src: yes
+  with_items:
+  - panaces.agentnode.service
+- name: RELOAD SYSTEM SERVICE DB
+  systemd:
+    daemon_reload: yes
+- name: ENABLE CO-HOSTED SITE CONTROLLER SERVICE
+  systemd:
+    name: panaces.agentnode
+    state: started
+    enabled: yes
