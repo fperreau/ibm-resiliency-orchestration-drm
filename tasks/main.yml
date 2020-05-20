@@ -68,9 +68,11 @@
     remote_src: true
     creates: "{{ TOMCAT_HOME }}"
 - name: RENAME APACHE TOMCAT HOME
-  command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
-  args:
-    creates: "{{ TOMCAT_HOME }}"
+  stat:
+    path: "/opt/{{ TOMCAT_SRC }}"
+  register: result
+- command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
+  when: result.stat.exists
 
 #
 # Install Resiliency Orchestration DRM
