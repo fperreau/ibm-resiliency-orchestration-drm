@@ -10,9 +10,12 @@
 #
 - name: ADD CO-HOSTED SITE CONTROLLER IP ALIAS
   shell: |
-    nmcli connection modify "System eth0" +IPv4.address "{{ scr_ip }}"
+    nmcli connection modify "System eth0" +IPv4.address "{{ scr_ip }}" &&
+      echo 'IP ALIAS {{ scr_ip }}' > /root/SetIPAlias.lck
     nmcli networking off
     nmcli network on
+  args:
+    creates: "/root/SetIPAlias.lck"
 - name: COPY CO-HOSTED SITE CONTROLLER INSTALL FILES
   unarchive:
     src: "{{ FILES }}/{{ item.archive }}"
