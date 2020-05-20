@@ -35,7 +35,6 @@ Default role variables are liste bellow. Those variables define the Binary files
   
   ## DRM install modes  
   **standard** - DRM installation with remote Site Controller
-  
   **cohosted** - DRM installation with local Site Controller
 
   # Default role parameters define in Ansible role/defaults
