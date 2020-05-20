@@ -126,6 +126,17 @@ Execute this simple command **ansible-playbook site.yml** to deploy your first I
       roles:
         - role: fperreau.ibm_resiliency_orchestration_drm
 
+and to deploy DRM + Co-Hosted Site Controller
+
+    - name: Install RESILIENCY ORCHESTRATION
+      hosts: DRM
+      remote_user: root
+      roles:
+        - role: fperreau.ibm_resiliency_orchestration_drm
+          vars:
+            drm_mode: "cohosted"
+            scr_ip: xx.xx.xx.xx/yy
+
 License
 -------
 
