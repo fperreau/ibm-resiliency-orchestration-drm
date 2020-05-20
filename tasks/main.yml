@@ -54,9 +54,9 @@
 - name: SET SQL ROOT PASSWORD
   shell: |
     mysqladmin -u root password '{{ sql_pass }}' &&
-    echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
+    echo 'MariaDB Root password' > {{ BUILD }}/SetSQLRootPassword.lck
   args:
-    creates: "/root/SetSQLRootPassword.lck"
+    creates: "{{ BUILD }}/SetSQLRootPassword.lck"
 
 #
 # Install Apache TOMCAT
