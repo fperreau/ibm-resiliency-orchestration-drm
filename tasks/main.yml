@@ -46,6 +46,7 @@
     dest: "/etc/my.cnf"
     remote_src: true
     backup: true
+    creates: "/etc/my.cnf"
 - name: START MARIADB
   service:
     name: mariadb
