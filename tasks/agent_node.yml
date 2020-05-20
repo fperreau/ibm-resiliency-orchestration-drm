@@ -28,7 +28,6 @@
     path: "{{ BUILD }}/Windows"
     state: absent
     force: true
-  when: result.changed
 - name: COPY CO-HOSTED SITE CONTROLLER TEMPLATE FILES
   template:
     src: "{{ item }}"

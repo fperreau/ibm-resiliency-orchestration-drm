@@ -68,7 +68,7 @@
     remote_src: true
     creates: "{{ TOMCAT_HOME }}"
 - name: RENAME APACHE TOMCAT HOME
-  command: mv "/opt/{{ TOMCAT_SRC }}" "{{ TOMCAT_HOME }}"
+  command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
   args:
     creates: "{{ TOMCAT_HOME }}"
 
