@@ -71,7 +71,8 @@
   stat:
     path: "/opt/{{ TOMCAT_SRC }}"
   register: result
-- command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
+- name: MOVE
+  command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
   when: result.stat.exists
 
 #
