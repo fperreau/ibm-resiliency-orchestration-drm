@@ -11,7 +11,7 @@
   dnf:
     name: "{{ PACKAGES }}"
     state: present
-  
+
 #
 # CONFIGURE LINUX RESOURCES
 #
