@@ -22,7 +22,6 @@
     mode: "o-xwr"
     creates: "{{ BUILD }}/{{ item.creates }}"
   with_items: "{{ BINARY_SITE_CONTROLLER_FILES }}"
-  register: result
 - name: DELETE WINDOWS SITE CONTROLLER INSTALL FILE
   file:
     path: "{{ BUILD }}/Windows"
