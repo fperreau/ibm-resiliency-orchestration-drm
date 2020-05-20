@@ -27,7 +27,7 @@ Default role variables are liste bellow. Those variables define the Binary files
   Those variables configure the DRM installation mode, IP address and the access to MariaDB server.
 
     drm_mode:     "standard"
-    drm_ip:       "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    drm_ip:       "{{ VM[inventory_hostname].IP }}"
     scr_ip:       "{{ drm_ip }}"
     sql_id:       99
     sql_port:     3306
