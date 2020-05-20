@@ -67,10 +67,10 @@
     dest: /opt
     remote_src: true
     creates: "{{ TOMCAT_HOME }}"
-#- name: RENAME APACHE TOMCAT HOME
-#  command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
-#  args:
-#    creates: "{{ TOMCAT_HOME }}"
+- name: RENAME APACHE TOMCAT HOME
+  command: mv /opt/{{ TOMCAT_SRC }} {{ TOMCAT_HOME }}
+  args:
+    creates: "{{ TOMCAT_HOME }}"
 
 #
 # Install Resiliency Orchestration DRM
@@ -80,7 +80,6 @@
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ EAMSROOT }}"
-  register: result
 
 #
 # Install Third PARTY software
@@ -95,7 +94,6 @@
     creates: "{{ item }}/calendar.js"
   with_items:
     - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
-  register: install_thirdparty
 - name: "COPY ThirPartyJSLib TO {{ item }}"
   copy:
     src: "{{ item }}/ThirdPartyJSLib/"
@@ -139,7 +137,6 @@
     src: "{{ BUILD }}/{{ item }}"
     dest: "/etc/systemd/system/{{ item }}"
     remote_src: true
-  register: result
   with_items:
     - panaces.service
 - name: RELOAD SYSTEM SERVICE DB
