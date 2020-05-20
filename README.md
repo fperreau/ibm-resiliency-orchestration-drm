@@ -33,9 +33,9 @@ Default role variables are liste bellow. Those variables define the Binary files
     sql_port:     3306
     sql_pass:     "secret"
   
-  ## DRM install modes  
-  **standard** - DRM installation with remote Site Controller
-  **cohosted** - DRM installation with local Site Controller
+  ## DRM install modes
+  - **standard** - DRM installation with remote Site Controller 
+  - **cohosted** - DRM installation with local Site Controller
 
   # Default role parameters define in Ansible role/defaults
 
@@ -103,7 +103,7 @@ Minimal resources needed by server to run IBM Resiliency Orchestration are:
 
 We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in **Ansible files** directory name to DRM_8.0.4.0 for this version 8.0.4.0.
 
-    - **files**:
+  **files**
       - DRM_8.0.4.0:
         - Server.tar.gz           # binary tar file of IBM Resiliency Orchestration DRM
         - SiteController.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
