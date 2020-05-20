@@ -14,12 +14,12 @@
     state: directory
 - name: COPY BINARY FILES
   unarchive:
-    src:      "{{ FILES }}/{{ item.archive }}"
-    dest:     "{{ BUILD }}"
-    owner:    root
-    group:    root
-    mode:     "o-xwr"
-    creates:  "{{ BUILD }}/{{ item.creates }}"
+    src: "{{ FILES }}/{{ item.archive }}"
+    dest: "{{ BUILD }}"
+    owner: root
+    group: root
+    mode: "o-xwr"
+    creates: "{{ BUILD }}/{{ item.creates }}"
   with_items: "{{ BINARY_FILES }}"
 - name: COPY TEMPLATE FILES
   template:
@@ -44,15 +44,17 @@
   copy:
     src: "{{ BUILD }}/my_drm.cnf"
     dest: "/etc/my.cnf"
-    remote_src: yes
-    backup: yes
+    remote_src: true
+    backup: true
 - name: START MARIADB
   service:
     name: mariadb
     state: started
-    enabled: yes
+    enabled: true
 - name: SET SQL ROOT PASSWORD
-  shell: mysqladmin -u root password '{{ sql_pass }}' && echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
+  shell: |
+    mysqladmin -u root password '{{ sql_pass }}' &&
+    echo 'MariaDB Root password' > /root/SetSQLRootPassword.lck
   args:
     creates: "/root/SetSQLRootPassword.lck"
 
@@ -63,7 +65,7 @@
   unarchive:
     src: "{{ TOMCAT_PKG }}"
     dest: /opt
-    remote_src: yes
+    remote_src: true
     creates: "{{ TOMCAT_HOME }}"
 - name: RENAME APACHE TOMCAT HOME
   command: mv "/opt/{{ TOMCAT_SRC }}" "{{ TOMCAT_HOME }}"
@@ -74,7 +76,7 @@
 # Install Resiliency Orchestration DRM
 #
 - name: INSTALL PANACES
-  command: "{{ BUILD }}/install.bin -f {{ BUILD }}/PanacesServerInstaller.properties"
+  command: ./install.bin -f {{ BUILD }}/PanacesServerInstaller.properties
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ EAMSROOT }}"
@@ -89,10 +91,10 @@
     dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
-    remote_src: yes
+    remote_src: true
     creates: "{{ item }}/calendar.js"
   with_items:
-  - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
+    - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
   register: install_thirdparty
 - name: "COPY ThirPartyJSLib TO {{ item }}"
   copy:
@@ -100,21 +102,21 @@
     dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
-    remote_src: yes
+    remote_src: true
   with_items:
-   - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
+    - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/scripts"
 - name: INSTALL GNULIB JSON IN PANACES
   unarchive:
     src: "{{ THIRDPARTY_GNULIB }}"
     dest: "{{ item }}"
     owner: tomcatuser
     group: tomcatusergroup
-    mode:  "0775"
-    remote_src: yes
+    mode: "0775"
+    remote_src: true
     creates: "{{ item }}/json-20180813.jar"
   with_items:
-  - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib"
-  - "{{ EAMSROOT }}/lib"
+    - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib"
+    - "{{ EAMSROOT }}/lib"
 
 #
 # Secure Panaces Tomcat
@@ -126,8 +128,8 @@
     mode: "0640"
     owner: tomcatuser
     group: tomcatusergroup
-    remote_src: yes
-    backup: yes
+    remote_src: true
+    backup: true
 
 #
 # Configure Panaces service
@@ -136,25 +138,25 @@
   copy:
     src: "{{ BUILD }}/{{ item }}"
     dest: "/etc/systemd/system/{{ item }}"
-    remote_src: yes
+    remote_src: true
   register: result
   with_items:
-  - panaces.service
+    - panaces.service
 - name: RELOAD SYSTEM SERVICE DB
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
 - name: ENABLE PANACES SERVICE
   systemd:
     name: panaces
     state: started
-    enabled: yes
+    enabled: true
 
 #
 # Create Backup Panaces location
 #
 - name: CREATE BACKUP PANACES LOCATION
   file:
-    path:  /opt/backup
+    path: /opt/backup
     owner: panacesuser
     group: "panacesusergroup"
     state: directory

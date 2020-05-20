@@ -7,45 +7,45 @@
 
 - name: Start MARIADB
   service:
-    name:  mariadb
+    name: mariadb
     state: started
 
 - name: Stop MARIADB
   service:
-    name:  mariadb
+    name: mariadb
     state: stopped
 
 - name: Restart MARIADB
   service:
-    name:  mariadb
+    name: mariadb
     state: restarted
 
 - name: Start PANACES
   service:
-    name:  panaces
+    name: panaces
     state: started
 
 - name: Stop PANACES
   service:
-    name:  panaces
+    name: panaces
     state: stopped
 
 - name: Restart PANACES
   service:
-    name:  panaces
+    name: panaces
     state: restarted
 
 - name: Start SITE CONTROLLER
   service:
-    name:  panaces.agentnode
+    name: panaces.agentnode
     state: started
 
 - name: Stop SITE CONTROLLER
   service:
-    name:  panaces.agentnode
+    name: panaces.agentnode
     state: stopped
 
 - name: Restart SITE CONTROLLER
   service:
-    name:  panaces.agentnode
+    name: panaces.agentnode
     state: restarted

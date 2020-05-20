@@ -1,3 +1,4 @@
+---
 ##
 # IBM Resiliency Orchestration DRM role
 #
@@ -20,16 +21,16 @@
     dest: /etc/sysctl.conf
     line: "{{ item }}"
   with_items:
-  - "net.ipv4.tcp_retries2 = 4"
-  - "net.ipv4.ip_forward = 1"
-  - "net.ipv6.conf.all.disable_ipv6 = 1"
-  - "net.ipv6.conf.default.disable_ipv6 = 1"
+    - "net.ipv4.tcp_retries2 = 4"
+    - "net.ipv4.ip_forward = 1"
+    - "net.ipv6.conf.all.disable_ipv6 = 1"
+    - "net.ipv6.conf.default.disable_ipv6 = 1"
 - name: LIMITS.CONF
   lineinfile:
     dest: /etc/security/limits.conf
     line: "{{ item }}"
   with_items:
-  - "root soft nproc  10240"
-  - "root hard nproc  10240"
-  - "root soft nofile 20480"
-  - "root hard nofile 20480"
+    - "root soft nproc  10240"
+    - "root hard nproc  10240"
+    - "root soft nofile 20480"
+    - "root hard nofile 20480"

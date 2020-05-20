@@ -1,3 +1,4 @@
+---
 ##
 # IBM Resiliency Orchestration DRM role
 #
@@ -14,12 +15,12 @@
     nmcli network on
 - name: COPY CO-HOSTED SITE CONTROLLER INSTALL FILES
   unarchive:
-    src:      "{{ FILES }}/{{ item.archive }}"
-    dest:     "{{ BUILD }}"
-    owner:    root
-    group:    root
-    mode:     "o-xwr"
-    creates:  "{{ BUILD }}/{{ item.creates }}"
+    src: "{{ FILES }}/{{ item.archive }}"
+    dest: "{{ BUILD }}"
+    owner: root
+    group: root
+    mode: "o-xwr"
+    creates: "{{ BUILD }}/{{ item.creates }}"
   with_items: "{{ BINARY_SITE_CONTROLLER_FILES }}"
   register: result
 - name: DELETE WINDOWS SITE CONTROLLER INSTALL FILE
@@ -35,10 +36,12 @@
   with_items: "{{ TEMPLATE_SITE_CONTROLLER_FILES }}"
 
 #
-# Install Co-Hosted Site Controller 
+# Install Co-Hosted Site Controller
 #
 - name: INSTALL CO-HOSTED LINUX SITE CONTROLLER
-  command: "{{ BUILD }}/Linux/VM/SiteController.bin -f {{ BUILD }}/PanacesAgentNodeInstaller.properties"
+  command: |
+    ./Linux/VM/SiteController.bin
+      -f {{ BUILD }}/PanacesAgentNodeInstaller.properties
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ SCTRL_HOME }}"
@@ -50,14 +53,14 @@
   copy:
     src: "{{ BUILD }}/{{ item }}"
     dest: "/etc/systemd/system/{{ item }}"
-    remote_src: yes
+    remote_src: true
   with_items:
-  - panaces.agentnode.service
+    - panaces.agentnode.service
 - name: RELOAD SYSTEM SERVICE DB
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
 - name: ENABLE CO-HOSTED SITE CONTROLLER SERVICE
   systemd:
     name: panaces.agentnode
     state: started
-    enabled: yes
+    enabled: true
