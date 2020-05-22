@@ -41,7 +41,7 @@
 #
 - name: INSTALL CO-HOSTED LINUX SITE CONTROLLER
   command: |
-    ./Linux/VM/SiteController.bin
+    {{ BUILD }}/Linux/VM/SiteController.bin
       -f {{ BUILD }}/PanacesAgentNodeInstaller.properties
   args:
     chdir: "{{ BUILD }}"

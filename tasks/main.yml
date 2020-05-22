@@ -76,7 +76,7 @@
 # Install Resiliency Orchestration DRM
 #
 - name: INSTALL PANACES
-  command: ./install.bin -f {{ BUILD }}/PanacesServerInstaller.properties
+  command: "{{ BUILD }}/install.bin -f {{ BUILD }}/PanacesServerInstaller.properties"
   args:
     chdir: "{{ BUILD }}"
     creates: "{{ EAMSROOT }}"
