@@ -10,10 +10,10 @@
 #
 - name: ADD CO-HOSTED SITE CONTROLLER IP ALIAS
   shell: |
-    nmcli connection modify "System eth0" +IPv4.address "{{ scr_ip }}" &&
-      echo 'IP ALIAS {{ scr_ip }}' > {{ BUILD }}/SetIPAlias.lck
-    nmcli networking off
-    nmcli network on
+    nmcli connection modify "System {{ dev_ip }}" +IPv4.address "{{ scr_ip }}" \
+      && echo "IP ALIAS {{ scr_ip }} on {{ dev_ip }}" > {{ BUILD }}/SetIPAlias.lck
+    nmcli connection down "System {{ dev_ip }}"
+    nmcli connection up "System {{ dev_ip }}"
   args:
     creates: "{{ BUILD }}/SetIPAlias.lck"
 - name: COPY CO-HOSTED SITE CONTROLLER INSTALL FILES

@@ -3,7 +3,7 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 0.9.5
+version: 0.9.6
 
 Requirements
 ------------
@@ -27,8 +27,10 @@ Default role variables are liste bellow. Those variables define the Binary files
   Those variables configure the DRM installation mode, IP address and the access to MariaDB server.
 
     drm_mode:     "standard"
-    drm_ip:       "{{ VM[inventory_hostname].IP }}"
-    scr_ip:       "{{ drm_ip }}"
+    drm1_ip:      "{{ VM[inventory_hostname].IP }}"  # Primary DRM
+    drm2_ip:      "{{ drm1_ip }}"                    # Secondary DRM
+    scr_ip:       "{{ drm1_ip }}"
+    dev_ip:       "eth0"
     sql_id:       99
     sql_port:     3306
     sql_pass:     "secret"
