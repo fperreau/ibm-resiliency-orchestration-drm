@@ -119,12 +119,12 @@
 #
 # Install BIRT software
 #
-- name: "Copy birt/WebViewerExample to {{ TOMCAT_HOME }}/webapps."
+- name: Copy 'birt/WebViewerExample' to '{{ TOMCAT_HOME }}/webapps/birt'.
   command: cp -r {{ BUILD }}/birt-runtime-4_3_2/WebViewerExample birt
   args:
     chdir: "{{ TOMCAT_HOME }}/webapps"
     creates: "{{ TOMCAT_HOME }}/webapps/birt"
-- name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar'.
+- name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar' to 'birt'.
   shell: cp {{ item.src }} {{ item.dest }}
   args:
     chdir: "{{ TOMCAT_HOME }}/webapps"
@@ -133,10 +133,12 @@
     - { src: "PanacesGUI/report/connection_profile_dashboard", dest: "birt" }
     - { src: "PanacesGUI/report/*.rptdesign", dest: "birt/report" }
     - { src: "PanacesGUI/WEB-INF/lib/mariadb-java-client-2.3.0.jar", dest: "birt/WEB-INF/lib" }
-- name: Set tomcatuser:tomcatusergroup onwer file.
-  command: chown -R tomcatuser:tomcatusergroup birt
-  args:
-    chdir: "{{ TOMCAT_HOME }}/webapps"
+- name: Set tomcatuser:tomcatusergroup owner file for '{{ TOMECAT_HOME }}/webapps/birt'.
+  file:
+    path: "{{ TOMCAT_HOME }}/webapps/birt"
+    recurse: true
+    owner: tomcatuser
+    group: tomcatusergroup
 
 #
 # Secure Panaces Tomcat
