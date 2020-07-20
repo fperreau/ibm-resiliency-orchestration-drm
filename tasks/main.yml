@@ -125,14 +125,20 @@
     chdir: "{{ TOMCAT_HOME }}/webapps"
     creates: "{{ TOMCAT_HOME }}/webapps/birt"
 - name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar' to 'birt'.
-  shell: cp {{ item.src }} {{ item.dest }}
-  args:
-    chdir: "{{ TOMCAT_HOME }}/webapps"
-    creates: "{{ TOMCAT_HOME }}/webapps/birt/connection_profile_dashboard"
+  copy: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    remote_src: true
   with_items:
-    - { src: "PanacesGUI/report/connection_profile_dashboard", dest: "birt" }
-    - { src: "PanacesGUI/report/*.rptdesign", dest: "birt/report" }
-    - { src: "PanacesGUI/WEB-INF/lib/mariadb-java-client-2.3.0.jar", dest: "birt/WEB-INF/lib" }
+    - { src: "{{ TOMCAT_HOME }}/webapps/PanacesGUI/report/connection_profile_dashboard",
+        dest: "{{ TOMCAT_HOME }}/webapps/birt",
+        creates: "connection_profile_dashboard" }
+    - { src: "{{ TOMCAT_HOME }}/webapps/PanacesGUI/report/",
+        dest: "{{ TOMCAT_HOME }}/webapps/birt/report",
+        creates: "PDF_report.rptdesign" }
+    - { src: "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib/mariadb-java-client-2.3.0.jar",
+        dest: "{{ TOMCAT_HOME }}/webapps/birt/WEB-INF/lib",
+        creates: "mariadb-java-client-2.3.0.jar" }
 - name: Set tomcatuser:tomcatusergroup owner file for '{{ TOMECAT_HOME }}/webapps/birt'.
   file:
     path: "{{ TOMCAT_HOME }}/webapps/birt"
