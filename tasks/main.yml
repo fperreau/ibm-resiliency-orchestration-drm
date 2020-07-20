@@ -123,10 +123,12 @@
   command: cp -r {{ BUILD }}/birt-runtime-4_3_2/WebViewerExample birt
   args:
     chdir: "{{ TOMCAT_HOME }}/webapps"
+    creates: "{{ TOMCAT_HOME }}/webapps/birt"
 - name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar'.
   shell: cp {{ item.src }} {{ item.dest }}
   args:
     chdir: "{{ TOMCAT_HOME }}/webapps"
+    creates: "{{ TOMCAT_HOME }}/webapps/birt/connection_profile_dashboard"
   with_items:
     - { src: "PanacesGUI/report/connection_profile_dashboard", dest: "birt" }
     - { src: "PanacesGUI/report/*.rptdesign", dest: "birt/report" }
