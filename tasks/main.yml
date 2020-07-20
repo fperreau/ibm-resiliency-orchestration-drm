@@ -6,6 +6,12 @@
 ##
 
 #
+# Common Linux configuration
+#
+- name: COMMON LINUX CONFIGURATION
+  include_tasks: common.yml
+
+#
 # Configure BUILD server environment
 #
 - name: CREATE BUILD DIRECTORY
@@ -26,12 +32,6 @@
     src: "{{ item }}"
     dest: "{{ BUILD }}/{{ item }}"
   with_items: "{{ TEMPLATE_FILES }}"
-
-#
-# Common Linux configuration
-#
-- name: COMMON LINUX CONFIGURATION
-  include_tasks: common.yml
 
 #
 # Install MariaDB server
@@ -115,6 +115,26 @@
   with_items:
     - "{{ TOMCAT_HOME }}/webapps/PanacesGUI/WEB-INF/lib"
     - "{{ EAMSROOT }}/lib"
+
+#
+# Install BIRT software
+#
+- name: "Copy birt/WebViewerExample to {{ TOMCAT_HOME }}/webapps."
+  command: cp -r {{ BUILD }}/birt-runtime-4_3_2/WebViewerExample birt
+  args:
+    chdir: "{{ TOMCAT_HOME }}/webapps"
+- name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar'.
+  shell: cp {{ item.src }} {{ item.dest }}
+  args:
+    chdir: "{{ TOMCAT_HOME }}/webapps"
+  with_items:
+    - { src: "PanacesGUI/report/connection_profile_dashboard", dest: "birt" }
+    - { src: "PanacesGUI/report/*.rptdesign", dest: "birt/report" }
+    - { src: "PanacesGUI/WEB-INF/lib/mariadb-java-client-2.3.0.jar", dest: "birt/WEB-INF/lib" }
+- name: Set tomcatuser:tomcatusergroup onwer file.
+  command: chown -R tomcatuser:tomcatusergroup birt
+  args:
+    chdir: "{{ TOMCAT_HOME }}/webapps"
 
 #
 # Secure Panaces Tomcat

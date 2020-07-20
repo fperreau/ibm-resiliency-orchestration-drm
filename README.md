@@ -3,7 +3,7 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 0.9.6
+version: 0.9.7
 
 Requirements
 ------------
@@ -15,7 +15,7 @@ All you need is to download IBM Resiliency Orchestration server file from IBM Su
     - https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/
     - https://downloads.mariadb.org/mariadb/10.3.17/
     - https://sourceforge.net/projects/gnu-utils/files/binaries/
-
+    - https://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-4_3_2-201402251404/
 
 Role Variables
 --------------
@@ -53,10 +53,11 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   ## List of files needed to install DRM
     BINARY_FILES:
-    - { archive: Server.tar.gz,  creates: install.bin }
-    - { archive: MariaDB.tgz,    creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
-    - { archive: Tomcat.tgz,     creates: apache-tomcat-9.0.27.tar.gz }
-    - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
+    - { archive: Server.tar.gz,          creates: install.bin }
+    - { archive: MariaDB.tgz,            creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+    - { archive: Tomcat.tgz,             creates: apache-tomcat-9.0.27.tar.gz }
+    - { archive: ThirdParty.tgz,         creates: ThirdPartyJSLib.zip }
+    - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
 
   ## Templates files used in DRM installation
     TEMPLATE_FILES:
@@ -78,6 +79,9 @@ Default role variables are liste bellow. Those variables define the Binary files
   ### Detail of **THIRDPARTY** Open Source software content of "ThirdParty.tgz"
     THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
     THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"
+
+  ### Detail of **BIRT** Eclipse Open Source software content for PDF generator
+    Eclipse_BIRT: "birt-runtime-4_3_2.zip"
 
   ## List of files need to install co-hosted Site Controller
     BINARY_SITE_CONTROLLER_FILES:
