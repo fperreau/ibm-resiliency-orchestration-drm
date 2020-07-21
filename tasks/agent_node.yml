@@ -61,7 +61,7 @@
 - name: RELOAD SYSTEM SERVICE DB
   systemd:
     daemon_reload: true
-- name: ENABLE CO-HOSTED SITE CONTROLLER SERVICE
+- name: ENABLE CO-HOSTED SITE CONTROLLER SERVICES
   systemd:
     name: "{{ item }}"
     state: started
