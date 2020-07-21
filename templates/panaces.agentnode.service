@@ -14,8 +14,8 @@ Type=forking
 Restart=always
 RestartSec=60
 User=root
-ExecStart={{ SCTRL_HOME }}/bin/SiteController.sh start
-ExecStop={{ SCTRL_HOME }}/bin/SiteController.sh stop
+ExecStart=/usr/bin/env {{ SCTRL_HOME }}/bin/SiteController.sh start
+ExecStop=/usr/bin/env {{ SCTRL_HOME }}/bin/SiteController.sh stop
 
 [Install]
 WantedBy=multi-user.target
