@@ -57,11 +57,15 @@
     remote_src: true
   with_items:
     - panaces.agentnode.service
+    - panaces.agentnode.linux.service
 - name: RELOAD SYSTEM SERVICE DB
   systemd:
     daemon_reload: true
 - name: ENABLE CO-HOSTED SITE CONTROLLER SERVICE
   systemd:
-    name: panaces.agentnode
+    name: "{{ item }}"
     state: started
     enabled: true
+  with_items:
+    - panaces.agentnode.service
+    - panaces.agentnode.linux.service

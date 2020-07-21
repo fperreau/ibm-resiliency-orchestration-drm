@@ -1,0 +1,21 @@
+##
+# IBM Resiliency Orchestration DRM role
+#
+# Author: F.PERREAU
+##
+
+[Unit]
+Description=Panaces Node Agent Linux OS services
+After=network.target
+
+[Service]
+WorkingDirectory={{ SCTRL_HOME }}/bin
+Type=forking
+Restart=always
+RestartSec=60
+User=root
+ExecStart=/usr/bin/env {{ SCTRL_HOME }}/bin/LinuxOSAgent.sh.sh start
+ExecStop=/usr/bin/env {{ SCTRL_HOME }}/bin/LinuxOSAgent.sh.sh stop
+
+[Install]
+WantedBy=multi-user.target

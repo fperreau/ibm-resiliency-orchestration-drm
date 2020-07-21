@@ -174,9 +174,11 @@
     daemon_reload: true
 - name: ENABLE PANACES SERVICE
   systemd:
-    name: panaces
+    name: "{{ item }}"
     state: started
     enabled: true
+  with_items:
+    - panaces.service
 
 #
 # Create Backup Panaces location

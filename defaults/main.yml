@@ -47,6 +47,8 @@ TEMPLATE_FILES:
   - tomcat_conf_server.xml
   - my_drm.cnf
   - panaces.service
+  - panaces.agentnode.service
+  - panaces.agentnode.linux.service
 
 MARIADB_PKG:
   - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
