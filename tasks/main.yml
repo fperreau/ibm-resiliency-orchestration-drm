@@ -125,7 +125,7 @@
     chdir: "{{ TOMCAT_HOME }}/webapps"
     creates: "{{ TOMCAT_HOME }}/webapps/birt"
 - name: Copy 'connection_profile_dashboard’,'*.rptdesign','mariadb-java-client-2.3.0.jar' to 'birt'.
-  copy: 
+  copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     remote_src: true

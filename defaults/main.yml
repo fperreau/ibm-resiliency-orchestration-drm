@@ -15,8 +15,8 @@ sql_pass: "secret"
 drm_ip: "{{ VM[inventory_hostname].IP }}"
 
 drm_mode: "standard"
-drm1_ip: "{{ drm_ip }}" 
-drm2_ip: "{{ drm_ip }}" 
+drm1_ip: "{{ drm_ip }}"
+drm2_ip: "{{ drm_ip }}"
 scr_ip: "{{ drm_ip }}"
 dev_ip: "eth0"
 

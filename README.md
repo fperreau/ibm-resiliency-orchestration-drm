@@ -9,7 +9,7 @@ Requirements
 ------------
 
 All you need is to download IBM Resiliency Orchestration server file from IBM Support Fix Central web site https://www.ibm.com/support/fixcentral and the Open Source prerequisits:
-  
+
   ## download web sites URI
     - https://www.ibm.com/support/fixcentral
     - https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/
@@ -34,9 +34,9 @@ Default role variables are liste bellow. Those variables define the Binary files
     sql_id:       99
     sql_port:     3306
     sql_pass:     "secret"
-  
+
   ## DRM install modes
-  - **standard** - DRM installation with remote Site Controller 
+  - **standard** - DRM installation with remote Site Controller
   - **cohosted** - DRM installation with local Site Controller
 
   # Default role parameters define in Ansible role/defaults
@@ -46,7 +46,7 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   ## Temporary directory use to install DRM
     BUILD:        "/tmp/build.Server"
-  
+
   ## Default paramters for DRM, Apache Tomcat, MaraiDB
     EAMSROOT:     /opt/panaces
     TOMCAT_HOME:  /opt/tomcat9
@@ -65,7 +65,7 @@ Default role variables are liste bellow. Those variables define the Binary files
     - panaces.service
     - my_drm.cnf
     - tomcat_conf_server.xml
-    
+
   ### Detail of **MariaDB** packages content of "MariaDB.tgz"
     MARIADB_PKG:
     - "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
@@ -96,7 +96,7 @@ Default role variables are liste bellow. Those variables define the Binary files
   ## Prerequisits packages for DRM and co-hosted Site Controller installation
     PACKAGES:
     - zip
-    - unzip    
+    - unzip
 
 Dependencies
 ------------
@@ -117,8 +117,8 @@ We need to download the IBM Resiliency Orchestration server and Open Source prer
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software
-  
-For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** distribution. 
+
+For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** distribution.
 
 Example DRM Playbook
 --------------------
