@@ -27,6 +27,26 @@
     mode: "o-xwr"
     creates: "{{ BUILD }}/{{ item.creates }}"
   with_items: "{{ BINARY_FILES }}"
+- name: COPY BINARY FILES EL8
+  unarchive:
+    src: "{{ FILES }}/{{ item.archive }}"
+    dest: "{{ BUILD }}"
+    owner: root
+    group: root
+    mode: "o-xwr"
+    creates: "{{ BUILD }}/{{ item.creates }}"
+  with_items: "{{ BINARY_FILES_EL8 }}"
+  when: drm_os == "el8"
+- name: COPY BINARY FILES EL7
+  unarchive:
+    src: "{{ FILES }}/{{ item.archive }}"
+    dest: "{{ BUILD }}"
+    owner: root
+    group: root
+    mode: "o-xwr"
+    creates: "{{ BUILD }}/{{ item.creates }}"
+  with_items: "{{ BINARY_FILES_EL7 }}"
+  when: drm_os == "el7"
 - name: COPY TEMPLATE FILES
   template:
     src: "{{ item }}"
