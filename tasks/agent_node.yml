@@ -16,6 +16,10 @@
     nmcli connection up "System {{ dev_ip }}"
   args:
     creates: "{{ BUILD }}/SetIPAlias.lck"
+- name: CREATE BUILD DIRECTORY
+  file:
+    path: "{{ BUILD }}"
+    state: directory
 - name: COPY CO-HOSTED SITE CONTROLLER INSTALL FILES
   unarchive:
     src: "{{ FILES }}/{{ item.archive }}"

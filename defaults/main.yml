@@ -9,16 +9,16 @@
 # ROLE VARIABLES
 #
 
-sql_id: 99
-sql_port: 3306
-sql_pass: "secret"
-drm_ip: "{{ VM[inventory_hostname].IP }}"
-
+drm_os: "el8"
 drm_mode: "standard"
+drm_ip: "{{ VM[inventory_hostname].IP }}"
 drm1_ip: "{{ drm_ip }}"
 drm2_ip: "{{ drm_ip }}"
 scr_ip: "{{ drm_ip }}"
 dev_ip: "eth0"
+sql_id: 99
+sql_port: 3306
+sql_pass: "secret"
 
 #drm_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 #dev_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['interface'] }}"
@@ -37,10 +37,15 @@ SCTRL_HOME: /opt/SiteController
 
 BINARY_FILES:
   - { archive: Server.tar.gz, creates: install.bin }
-  - { archive: MariaDB.tgz, creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
-  - { archive: Tomcat.tgz, creates: apache-tomcat-9.0.27.tar.gz }
+  - { archive: Tomcat-9.0.27.tar, creates: apache-tomcat-9.0.27.tar.gz }
   - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
   - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
+
+BINARY_FILES_EL8:
+  - { archive: MariaDB-el8-10.3.17.tar, creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+
+BINARY_FILES_EL7:
+  - { archive: MariaDB-el7-10.2.27.tar, creates: MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm }
 
 TEMPLATE_FILES:
   - PanacesServerInstaller.properties
@@ -48,10 +53,17 @@ TEMPLATE_FILES:
   - my_drm.cnf
   - panaces.service
 
-MARIADB_PKG:
+MARIADB_PKG_EL8:
   - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
   - "{{ BUILD }}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
   - "{{ BUILD }}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+
+MARIADB_PKG_EL7:
+  - "{{ BUILD }}/MariaDB-common-10.2.27-1.el7.centos.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-client-10.2.27-1.el7.centos.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-compat-10.2.27-1.el7.centos.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm"
+  - "{{ BUILD }}/galera-25.3.27-1.rhel7.el7.centos.x86_64.rpm"
 
 TOMCAT_SRC: "apache-tomcat-9.0.27"
 TOMCAT_PKG: "{{ BUILD }}/{{ TOMCAT_SRC }}.tar.gz"

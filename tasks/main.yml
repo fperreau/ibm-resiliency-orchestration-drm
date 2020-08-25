@@ -36,10 +36,16 @@
 #
 # Install MariaDB server
 #
-- name: INSTALL MARIADB SERVER
-  dnf:
-    name: "{{ MARIADB_PKG }}"
+- name: INSTALL EL8 MARIADB SERVER
+  package:
+    name: "{{ MARIADB_PKG_EL8 }}"
     state: present
+  when: drm_os == "el8"
+- name: INSTALL EL7 MARIADB SERVER
+  package:
+    name: "{{ MARIADB_PKG_EL7 }}"
+    state: present
+  when: drm_os == "el7"
 - name: CONFIGURE MY.CNF
   copy:
     src: "{{ BUILD }}/my_drm.cnf"

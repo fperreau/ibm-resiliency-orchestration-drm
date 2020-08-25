@@ -3,7 +3,7 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 1.0
+version: 1.1
 
 Requirements
 ------------
@@ -26,6 +26,7 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   Those variables configure the DRM installation mode, IP address and the access to MariaDB server.
 
+    drm_os:       "el8"
     drm_mode:     "standard"
     drm1_ip:      "{{ VM[inventory_hostname].IP }}"  # Primary DRM
     drm2_ip:      "{{ drm1_ip }}"                    # Secondary DRM
@@ -38,6 +39,10 @@ Default role variables are liste bellow. Those variables define the Binary files
   ## DRM install modes
   - **standard** - DRM installation with remote Site Controller
   - **cohosted** - DRM installation with local Site Controller
+
+  ## DRM Operating System
+  - **el7** - DRM on Red Hat Enterprise Linux 7
+  - **el8** - DRM on Red Hat Enterprise Linux 8
 
   # Default role parameters define in Ansible role/defaults
 
@@ -54,10 +59,15 @@ Default role variables are liste bellow. Those variables define the Binary files
   ## List of files needed to install DRM
     BINARY_FILES:
     - { archive: Server.tar.gz,          creates: install.bin }
-    - { archive: MariaDB.tgz,            creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
-    - { archive: Tomcat.tgz,             creates: apache-tomcat-9.0.27.tar.gz }
+    - { archive: Tomcat-9.0.27.tar,      creates: apache-tomcat-9.0.27.tar.gz }
     - { archive: ThirdParty.tgz,         creates: ThirdPartyJSLib.zip }
     - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
+
+    BINARY_FILES_EL8:
+    - { archive: MariaDB-el8-10.3.17.tar, creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+
+    BINARY_FILES_EL7:
+    - { archive: MariaDB-el7-10.2.27.tar, creates: MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm }
 
   ## Templates files used in DRM installation
     TEMPLATE_FILES:
@@ -66,19 +76,26 @@ Default role variables are liste bellow. Those variables define the Binary files
     - my_drm.cnf
     - tomcat_conf_server.xml
 
-  ### Detail of **MariaDB** packages content of "MariaDB.tgz"
-    MARIADB_PKG:
-    - "{{BUILD}}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
-    - "{{BUILD}}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
-    - "{{BUILD}}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+  ### Detail of **MariaDB** packages content of "MariaDB-el8-10.3.17.tar"
+    MARIADB_PKG_EL8:
+    - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+
+  ### Detail of **MariaDB** packages content of "MariaDB-el8-10.3.17.tar"
+    MARIADB_PKG_EL7:
+    - "{{ BUILD }}/MariaDB-common-10.2.27-1.el7.centos.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-client-10.2.27-1.el7.centos.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-compat-10.2.27-1.el7.centos.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm"
 
   ### Detail of **Apache Tomcat** binary file of "Tomcat.tgz"
     TOMCAT_SRC: "apache-tomcat-9.0.27"
-    TOMCAT_PKG: "{{BUILD}}/{{TOMCAT_SRC}}.tar.gz"
+    TOMCAT_PKG: "{{ BUILD }}/{{TOMCAT_SRC}}.tar.gz"
 
   ### Detail of **THIRDPARTY** Open Source software content of "ThirdParty.tgz"
-    THIRDPARTY_JSLIB:   "{{BUILD}}/ThirdPartyJSLib.zip"
-    THIRDPARTY_GNULIB:  "{{BUILD}}/gnulib.zip"
+    THIRDPARTY_JSLIB:   "{{ BUILD }}/ThirdPartyJSLib.zip"
+    THIRDPARTY_GNULIB:  "{{ BUILD }}/gnulib.zip"
 
   ### Detail of **BIRT** Eclipse Open Source software content for PDF generator
     Eclipse_BIRT: "birt-runtime-4_3_2.zip"
@@ -118,7 +135,7 @@ We need to download the IBM Resiliency Orchestration server and Open Source prer
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software
 
-For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** distribution.
+For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** or **RHELv7 ISO** distribution.
 
 Example DRM Playbook
 --------------------
