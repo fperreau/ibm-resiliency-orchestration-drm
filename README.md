@@ -4,7 +4,7 @@ Role Name
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
 RO: 8.0.4.0
-version: 8.0.1.2
+version: 80.1.2
 
 Requirements
 ------------
