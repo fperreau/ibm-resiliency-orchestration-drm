@@ -4,7 +4,7 @@ Role Name
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
 RO: 8.1.0.0
-version: 81.0.1
+version: 81.0.2
 
 Requirements
 ------------
@@ -127,16 +127,18 @@ Minimal resources needed by server to run IBM Resiliency Orchestration are:
     - DISK: 50 GiB + 100 GiB
     - OS:   RHELv8
 
-We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in **Ansible files** directory name to DRM_8.0.4.0 for this version 8.0.4.0.
+  List files for DRM_8.1.0.0
+  --------------------------
 
-  **files**
-      - DRM_8.1.0.0:
-        - IBM_Resiliency_Orchestration_Srvr.tar.gz  # binary tar file of IBM Resiliency Orchestration DRM
-        - IBM_Resiliency_Orchestration_Agt.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
-        - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
-        - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
-        - ThirdParty.tgz          # binary tar file contents the third party open source software
-        - birt-runtime-4_3_2.zip  # binary zip file contents the Birt PDF/HTML open source souftware
+We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in **Ansible files** directory name to DRM_8.1.0.0 for this version 8.1.0.0.
+
+    - IBM_Resiliency_Orchestration_Srvr.tar.gz  # binary tar file of IBM Resiliency Orchestration DRM
+    - IBM_Resiliency_Orchestration_Agt.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
+    - MariaDB-el8-10.3.20.tar  # binary tar file contents the MariaDB 10.3.20 RPM packages for EL8
+    - MariaDB-el7-10.2.27.tar  # binary tar file contents the MariaDB 10.2.27 RPM packages for EL7
+    - Tomcat.tgz               # binary tar file contents the Apache Tomcat version 9.0.27 tar file
+    - ThirdParty.tgz           # binary tar file contents the third party open source software
+    - birt-runtime-4_3_2.zip   # binary zip file contents the Birt PDF/HTML open source souftware
 
 For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** or **RHELv7 ISO** distribution.
 
