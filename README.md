@@ -3,7 +3,8 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-version: 1.1
+RO: 8.0.4.0
+version: 8.0.1.2
 
 Requirements
 ------------
@@ -58,7 +59,7 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   ## List of files needed to install DRM
     BINARY_FILES:
-    - { archive: Server.tar.gz,          creates: install.bin }
+    - { archive: IBM_Resiliency_Orchestration_Srvr.tar.gz, creates: install.bin }
     - { archive: Tomcat-9.0.27.tar,      creates: apache-tomcat-9.0.27.tar.gz }
     - { archive: ThirdParty.tgz,         creates: ThirdPartyJSLib.zip }
     - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
@@ -102,7 +103,7 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   ## List of files need to install co-hosted Site Controller
     BINARY_SITE_CONTROLLER_FILES:
-    - { archive: SiteController.tar.gz, creates: Linux/VM/SiteController.bin }
+    - { archive: IBM_Resiliency_Orchestration_Agt.tar.gz, creates: Linux/VM/SiteController.bin }
 
   ## Templates files used in co-hosted Controller installation
     TEMPLATE_SITE_CONTROLLER_FILES:
@@ -129,8 +130,8 @@ We need to download the IBM Resiliency Orchestration server and Open Source prer
 
   **files**
       - DRM_8.0.4.0:
-        - Server.tar.gz           # binary tar file of IBM Resiliency Orchestration DRM
-        - SiteController.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
+        - IBM_Resiliency_Orchestration_Srvr.tar.gz  # binary tar file of IBM Resiliency Orchestration DRM
+        - IBM_Resiliency_Orchestration_Agt.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software

@@ -36,7 +36,7 @@ TOMCAT_HOME: /opt/tomcat9
 SCTRL_HOME: /opt/SiteController
 
 BINARY_FILES:
-  - { archive: Server.tar.gz, creates: install.bin }
+  - { archive: IBM_Resiliency_Orchestration_Srvr.tar.gz, creates: install.bin }
   - { archive: Tomcat-9.0.27.tar, creates: apache-tomcat-9.0.27.tar.gz }
   - { archive: ThirdParty.tgz, creates: ThirdPartyJSLib.zip }
   - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
@@ -72,7 +72,7 @@ THIRDPARTY_JSLIB: "{{ BUILD }}/ThirdPartyJSLib.zip"
 THIRDPARTY_GNULIB: "{{ BUILD }}/gnulib.zip"
 
 BINARY_SITE_CONTROLLER_FILES:
-  - {archive: SiteController.tar.gz, creates: Linux/VM/SiteController.bin}
+  - {archive: IBM_Resiliency_Orchestration_Agt.tar.gz, creates: Linux/VM/SiteController.bin}
 
 TEMPLATE_SITE_CONTROLLER_FILES:
   - PanacesAgentNodeInstaller.properties
