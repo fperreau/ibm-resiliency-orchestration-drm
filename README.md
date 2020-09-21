@@ -3,8 +3,8 @@ Role Name
 
 IBM Resiliency Orchestration (RO) DRM role help you to install Disaster Recovery manager in Linux Red Hat server.
 
-RO: 8.0.4.0
-version: 80.1.2
+RO: 8.1.0.0
+version: 81.0.1
 
 Requirements
 ------------
@@ -36,6 +36,7 @@ Default role variables are liste bellow. Those variables define the Binary files
     sql_id:       99
     sql_port:     3306
     sql_pass:     "secret"
+    sql_keyid:    2
 
   ## DRM install modes
   - **standard** - DRM installation with remote Site Controller
@@ -47,8 +48,8 @@ Default role variables are liste bellow. Those variables define the Binary files
 
   # Default role parameters define in Ansible role/defaults
 
-  ## Files/repository content of binary files for version 8.0.4.0
-    FILES:        "DRM_8.0.4.0"
+  ## Files/repository content of binary files for version 8.1.0.0
+    FILES:        "DRM_8.1.0.0"
 
   ## Temporary directory use to install DRM
     BUILD:        "/tmp/build.Server"
@@ -65,7 +66,7 @@ Default role variables are liste bellow. Those variables define the Binary files
     - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
 
     BINARY_FILES_EL8:
-    - { archive: MariaDB-el8-10.3.17.tar, creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+    - { archive: MariaDB-el8-10.3.20.tar, creates: MariaDB-server-10.3.20-1.el8.x86_64.rpm }
 
     BINARY_FILES_EL7:
     - { archive: MariaDB-el7-10.2.27.tar, creates: MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm }
@@ -77,11 +78,11 @@ Default role variables are liste bellow. Those variables define the Binary files
     - my_drm.cnf
     - tomcat_conf_server.xml
 
-  ### Detail of **MariaDB** packages content of "MariaDB-el8-10.3.17.tar"
+  ### Detail of **MariaDB** packages content of "MariaDB-el8-10.3.20.tar"
     MARIADB_PKG_EL8:
-    - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
-    - "{{ BUILD }}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
-    - "{{ BUILD }}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-common-10.3.20-1.el8.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-client-10.3.20-1.el8.x86_64.rpm"
+    - "{{ BUILD }}/MariaDB-server-10.3.20-1.el8.x86_64.rpm"
 
   ### Detail of **MariaDB** packages content of "MariaDB-el8-10.3.17.tar"
     MARIADB_PKG_EL7:
@@ -129,12 +130,13 @@ Minimal resources needed by server to run IBM Resiliency Orchestration are:
 We need to download the IBM Resiliency Orchestration server and Open Source prerequisits in **Ansible files** directory name to DRM_8.0.4.0 for this version 8.0.4.0.
 
   **files**
-      - DRM_8.0.4.0:
+      - DRM_8.1.0.0:
         - IBM_Resiliency_Orchestration_Srvr.tar.gz  # binary tar file of IBM Resiliency Orchestration DRM
         - IBM_Resiliency_Orchestration_Agt.tar.gz   # binary tar file of IBM Resiliency Orchestration SiteController
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software
+        - birt-runtime-4_3_2.zip  # binary zip file contents the Birt PDF/HTML open source souftware
 
 For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** or **RHELv7 ISO** distribution.
 
