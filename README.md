@@ -135,6 +135,7 @@ We need to download the IBM Resiliency Orchestration server and Open Source prer
         - MariaDB.tgz             # binary tar file contents the MariaDB 10.3.17 RPM packages
         - Tomcat.tgz              # binary tar file contents the Apache Tomcat version 9.0.27 tar file
         - ThirdParty.tgz          # binary tar file contents the third party open source software
+        - birt-runtime-4_3_2.zip  # binary zip file contents the Birt PDF/HTML open source souftware
 
 For dependency Red Hat packages, you can use the **Red Hat BaseOS+AppStream** yum repository from **RHELv8 ISO** or **RHELv7 ISO** distribution.
 
