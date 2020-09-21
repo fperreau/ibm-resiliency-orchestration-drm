@@ -36,11 +36,14 @@ binlog_format=mixed
 
 # Setup for DB replication
 server-id={{ sql_id }}
-log-bin={{ inventory_hostname }}-bin
+skip-log-bin={{ inventory_hostname }}-bin
 replicate-ignore-db=mysql
 replicate-ignore-db=information_schema
 replicate-ignore-db=performance_schema
 replicate-ignore-db=test
+
+# v8.1
+skip-log-bin-trust-function-creators=1
 
 [mysqld_safe]
 log-error=/var/log/mysqld.log
@@ -63,3 +66,13 @@ write_buffer = 2M
 
 [mysqlhotcopy]
 interactive-timeout
+
+[mariadb]
+ssl
+ssl-ca={{ EAMSROOT }}/installconfig/mariadbencryption/ca-cert.pem
+ssl-cert={{ EAMSROOT }}/installconfig/mariadbencryption/server-cert.pem
+ssl-key={{ EAMSROOT }}/installconfig/mariadbencryption/server-key.pem
+plugin-load-add = file_key_management.so
+file_key_management
+file_key_management_filename = {{ EAMSROOT }}/installconfig/mariadbencryption/keys.txt
+innodb_default_encryption_key_id = {{ sql_keyid }}

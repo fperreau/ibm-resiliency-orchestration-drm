@@ -19,6 +19,7 @@ dev_ip: "eth0"
 sql_id: 99
 sql_port: 3306
 sql_pass: "secret"
+sql_keyid: 2
 
 #drm_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 #dev_ip:   "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['interface'] }}"
@@ -28,7 +29,7 @@ sql_pass: "secret"
 # ROLE PARAMETERS
 #
 
-FILES: "DRM_8.0.4.0"
+FILES: "DRM_8.1.0.0"
 BUILD: "/tmp/build.Server"
 
 EAMSROOT: /opt/panaces
@@ -42,7 +43,7 @@ BINARY_FILES:
   - { archive: birt-runtime-4_3_2.zip, creates: birt-runtime-4_3_2 }
 
 BINARY_FILES_EL8:
-  - { archive: MariaDB-el8-10.3.17.tar, creates: MariaDB-server-10.3.17-1.el8.x86_64.rpm }
+  - { archive: MariaDB-el8-10.3.20.tar, creates: MariaDB-server-10.3.20-1.el8.x86_64.rpm }
 
 BINARY_FILES_EL7:
   - { archive: MariaDB-el7-10.2.27.tar, creates: MariaDB-server-10.2.27-1.el7.centos.x86_64.rpm }
@@ -54,9 +55,9 @@ TEMPLATE_FILES:
   - panaces.service
 
 MARIADB_PKG_EL8:
-  - "{{ BUILD }}/MariaDB-common-10.3.17-1.el8.x86_64.rpm"
-  - "{{ BUILD }}/MariaDB-client-10.3.17-1.el8.x86_64.rpm"
-  - "{{ BUILD }}/MariaDB-server-10.3.17-1.el8.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-common-10.3.20-1.el8.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-client-10.3.20-1.el8.x86_64.rpm"
+  - "{{ BUILD }}/MariaDB-server-10.3.20-1.el8.x86_64.rpm"
 
 MARIADB_PKG_EL7:
   - "{{ BUILD }}/MariaDB-common-10.2.27-1.el7.centos.x86_64.rpm"
